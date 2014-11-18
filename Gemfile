@@ -21,5 +21,9 @@ group :development, :test do
 
   gem 'rspec-rails'
   gem 'capybara'
+
+  gem 'guard-bundler', require: false
+  gem 'guard-rspec', require: false
+  gem 'ruby_gntp'
 end
 
