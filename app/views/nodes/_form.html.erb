@@ -1,0 +1,7 @@
+<%= render 'shared/errors', model: node %>
+
+<%= bootstrap_form_for node do |f| %>
+  <%= f.text_field :name %>
+
+  <%= f.submit %>
+<% end %>

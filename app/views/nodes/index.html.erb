@@ -1,4 +1,7 @@
 <% content_for :title, 'Tree Nodes' %>
+<% content_for :toolbar do %>
+  <%= link_to 'New root node', new_node_path, class: 'btn btn-default' %>
+<% end %>
 
 <ul>
   <%= render @nodes %>

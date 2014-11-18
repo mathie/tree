@@ -1,0 +1,19 @@
+<% if model.errors.present? %>
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert">
+      <span aria-hidden="true">&times;</span>
+      <span class="sr-only">Close</span>
+    </button>
+
+    <p>
+      Your new <%= model.class.name.underscore.humanize(capitalize: false) %>
+      couldn't be saved because of the following issues:
+    </p>
+
+    <ul>
+      <% model.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

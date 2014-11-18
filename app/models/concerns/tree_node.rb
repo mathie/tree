@@ -2,6 +2,10 @@ module TreeNode
   extend ActiveSupport::Concern
 
   module ClassMethods
+    def new_root(params = {})
+      roots.new(params)
+    end
+
     def create_root(params = {})
       roots.create(params)
     end

@@ -27,6 +27,18 @@ RSpec.describe Node do
     end
   end
 
+  describe '.new_root' do
+    subject { Node.new_root }
+
+    it 'builds a new root node' do
+      expect(subject).to be_a(Node)
+    end
+
+    it 'does not persist the new node' do
+      expect(subject).not_to be_persisted
+    end
+  end
+
   describe '.create_root' do
     it 'persists a new root node' do
       expect do

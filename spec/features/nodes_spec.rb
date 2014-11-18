@@ -17,6 +17,37 @@ RSpec.feature 'Managing tree nodes' do
     expect(page).to have_content('Second root node')
   end
 
+  feature 'Creating a new root node' do
+    scenario 'finding the new root node button' do
+      visit '/'
+
+      click_link 'New root node'
+
+      expect(current_path).to eq('/nodes/new')
+    end
+
+    scenario 'hitting the cancel button' do
+      visit '/nodes/new'
+
+      click_on 'Cancel'
+
+      expect(current_path).to eq('/nodes')
+    end
+
+    scenario 'trying to create a root node without a name' do
+      visit '/nodes/new'
+
+      within '#new_node' do
+        fill_in 'Name', with: ''
+      end
+
+      click_button 'Create Node'
+
+      expect(current_path).to eq('/nodes')
+      expect(page).to have_content('Name can\'t be blank')
+    end
+  end
+
   context 'with a tree of nodes' do
     before(:each) do
       Node.create_tree name: 'Root node',
@@ -40,7 +71,7 @@ RSpec.feature 'Managing tree nodes' do
 
     let(:root_node) { Node.roots.first }
 
-    scenario 'seeing a list of root nodes wtih their children' do
+    scenario 'seeing a list of root nodes with their children' do
       visit '/'
 
       expect(page).to have_content('Root node')
