@@ -252,4 +252,44 @@ RSpec.describe Node do
       end
     end
   end
+
+  describe '#create_child' do
+    context 'on a root node' do
+      let!(:root) { root_node(name: 'Root node') }
+
+      it 'creates a new node' do
+        expect {
+          root.create_child(name: 'Child node')
+        }.to change(Node, :count).by(1)
+      end
+
+      it 'creates the node as a child of the root' do
+        expect {
+          root.create_child(name: 'Child node')
+        }.to change(root.children, :count).by(1)
+      end
+
+      it 'returns the newly created child' do
+        child = root.create_child(name: 'Child node')
+        expect(child).to be_persisted
+      end
+    end
+
+    context 'on an existing child node' do
+      let!(:root)  { root_node(name: 'Root node') }
+      let!(:child) { child_node(name: 'Child node', parent: root) }
+
+      it 'creates a new node' do
+        expect {
+          child.create_child(name: 'Grandchild node')
+        }.to change(Node, :count).by(1)
+      end
+
+      it 'creates the node as a child of the child' do
+        expect {
+          child.create_child(name: 'Grandchild node')
+        }.to change(child.children, :count).by(1)
+      end
+    end
+  end
 end
