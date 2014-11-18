@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Node do
   def root_node(params)
-    Node.create_root_node params
+    described_class.create_root params
   end
 
   def child_node(params)
@@ -27,10 +27,10 @@ RSpec.describe Node do
     end
   end
 
-  describe '.create_root_node' do
+  describe '.create_root' do
     it 'persists a new root node' do
       expect do
-        Node.create_root_node name: 'Root node'
+        Node.create_root name: 'Root node'
       end.to change(Node.roots, :count).by(1)
     end
   end

@@ -8,8 +8,8 @@ RSpec.feature 'Managing tree nodes' do
   end
 
   scenario 'seeing a list of root nodes' do
-    Node.create_root_node name: 'First root node'
-    Node.create_root_node name: 'Second root node'
+    Node.create_root name: 'First root node'
+    Node.create_root name: 'Second root node'
 
     visit '/'
 
