@@ -292,4 +292,33 @@ RSpec.describe Node do
       end
     end
   end
+
+  describe '#root' do
+    context 'on a root node' do
+      subject { root_node name: 'Root node' }
+
+      it 'returns itself as the root' do
+        expect(subject.root).to eq(subject)
+      end
+    end
+
+    context 'on an immediate child of the root' do
+      let(:root) { root_node name: 'Root node' }
+      subject { child_node name: 'Child node', parent: root }
+
+      it 'returns the correct root node' do
+        expect(subject.root).to eq(root)
+      end
+    end
+
+    context 'on a grandchild of the root' do
+      let(:root)  { root_node  name: 'Root node' }
+      let(:child) { child_node name: 'Child node',      parent: root  }
+      subject     { child_node name: 'Grandchild node', parent: child }
+
+      it 'returns the correct root node' do
+        expect(subject.root).to eq(root)
+      end
+    end
+  end
 end

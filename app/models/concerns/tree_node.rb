@@ -19,6 +19,15 @@ module TreeNode
     end
   end
 
+  def root
+    root_id = path.first
+    if root_id.present?
+      self.class.find(root_id)
+    else
+      self
+    end
+  end
+
   def children
     self.class.where(path: path + [ id ])
   end
