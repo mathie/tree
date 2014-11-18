@@ -1,3 +1,9 @@
 <li>
   <%= link_to node.name, node %>
+
+  <% if node.children.present? %>
+    <ul>
+      <%= render node.children %>
+    </ul>
+  <% end %>
 </li>
