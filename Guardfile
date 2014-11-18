@@ -10,11 +10,11 @@ guard :rspec, cmd: 'bin/rspec' do
   watch(%r{^lib/(.+)\.rb$}) { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch(%r{^app/(.+)\.rb$}) { |m| "spec/#{m[1]}_spec.rb" }
 
-  watch(%r{^app/controllers/(.+)_(controller)\.rb$}) do |m|
+  watch(%r{^app/controllers/(.+)_controller\.rb$}) do |m|
     [
       "spec/routing/#{m[1]}_routing_spec.rb",
       "spec/controllers/#{m[1]}_controller_spec.rb",
-      "spec/acceptance/#{m[1]}_spec.rb"
+      "spec/features/#{m[1]}_spec.rb"
     ]
   end
 
