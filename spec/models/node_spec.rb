@@ -181,7 +181,7 @@ RSpec.describe Node do
     end
   end
 
-  describe '.children' do
+  describe '#children' do
     subject { node.children }
 
     context 'of a root node' do
@@ -203,6 +203,40 @@ RSpec.describe Node do
 
       context 'with a single child' do
         let!(:child) { child_node name: 'Child node', parent: node }
+
+        it 'returns an ActiveRecord::Relation' do
+          expect(subject).to be_an(ActiveRecord::Relation)
+        end
+
+        it 'is contains one node' do
+          expect(subject.count).to eq(1)
+        end
+
+        it 'returns the correct child node' do
+          expect(subject).to eq([child])
+        end
+      end
+
+      context 'with a pair of children' do
+        let!(:child_1) { child_node name: 'Child node 1', parent: node }
+        let!(:child_2) { child_node name: 'Child node 2', parent: node }
+
+        it 'returns an ActiveRecord::Relation' do
+          expect(subject).to be_an(ActiveRecord::Relation)
+        end
+
+        it 'is contains two nodes' do
+          expect(subject.count).to eq(2)
+        end
+
+        it 'returns the correct child nodes' do
+          expect(subject).to eq([child_1, child_2])
+        end
+      end
+
+      context 'with grandchildren' do
+        let!(:child)      { child_node name: 'Child',      parent: node  }
+        let!(:grandchild) { child_node name: 'Grandchild', parent: child }
 
         it 'returns an ActiveRecord::Relation' do
           expect(subject).to be_an(ActiveRecord::Relation)
