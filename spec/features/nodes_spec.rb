@@ -106,6 +106,32 @@ RSpec.feature 'Managing tree nodes' do
 
         expect(current_path).to eq("/nodes/#{root_node.id}/edit")
       end
+
+      scenario 'Editing the name of an existing node' do
+        visit "/nodes/#{root_node.id}/edit"
+
+        within "#edit_node_#{root_node.id}" do
+          fill_in 'Name', with: 'Alternate Root Node'
+        end
+
+        click_on 'Update Node'
+
+        expect(current_path).to eq("/nodes/#{root_node.id}")
+        expect(page).to have_content('Node successfully updated.')
+      end
+
+      scenario 'Supplying invalid data for a node name' do
+        visit "/nodes/#{root_node.id}/edit"
+
+        within "#edit_node_#{root_node.id}" do
+          fill_in 'Name', with: ''
+        end
+
+        click_on 'Update Node'
+
+        expect(current_path).to eq("/nodes/#{root_node.id}")
+        expect(page).to have_content('Name can\'t be blank')
+      end
     end
   end
 end

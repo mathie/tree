@@ -214,4 +214,72 @@ RSpec.describe NodesController do
       expect(assigns(:node)).to eq(node)
     end
   end
+
+  describe 'PUT :update' do
+    let(:node) { instance_spy('Node', update_attributes: true, to_param: 'node') }
+    let(:node_params) { { name: 'Alternate root node' } }
+    let(:params) { { id: 'node', node: node_params } }
+
+    before(:each) do
+      allow(node_class).to receive(:find).and_return(node)
+    end
+
+    def do_put(params = params)
+      put :update, params
+    end
+
+    it 'finds the existing node' do
+      do_put
+
+      expect(node_class).to have_received(:find).with('node')
+    end
+
+    it 'attempts to update the node attributes' do
+      do_put
+
+      expect(node).to have_received(:update_attributes).with(node_params)
+    end
+
+    context 'when successfully saved' do
+      before(:each) do
+        allow(node).to receive(:update_attributes).and_return(true)
+      end
+
+      it 'redirects to the updated node' do
+        do_put
+
+        expect(response).to redirect_to(node_path(node))
+      end
+
+      it 'sets a flash notice' do
+        do_put
+
+        expect(flash.notice).to eq('Node successfully updated.')
+      end
+    end
+
+    context 'when it fails to save' do
+      before(:each) do
+        allow(node).to receive(:update_attributes).and_return(false)
+      end
+
+      it 'returns http success' do
+        do_put
+
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'renders the edit template' do
+        do_put
+
+        expect(response).to render_template('nodes/edit')
+      end
+
+      it 'assigns the node to the view' do
+        do_put
+
+        expect(assigns(:node)).to eq(node)
+      end
+    end
+  end
 end

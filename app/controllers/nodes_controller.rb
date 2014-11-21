@@ -24,6 +24,15 @@ class NodesController < ApplicationController
     @node = Node.find(params.require(:id))
   end
 
+  def update
+    @node = Node.find(params.require(:id))
+    if @node.update_attributes(node_params)
+      redirect_to node_path(@node), notice: 'Node successfully updated.'
+    else
+      render 'edit'
+    end
+  end
+
   private
   def node_params
     params.require(:node).permit(:name)
