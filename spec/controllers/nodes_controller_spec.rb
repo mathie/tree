@@ -178,4 +178,40 @@ RSpec.describe NodesController do
       end
     end
   end
+
+  describe 'GET :edit' do
+    let(:node) { instance_spy('Node') }
+
+    before(:each) do
+      allow(node_class).to receive(:find).and_return(node)
+    end
+
+    def do_get
+      get :edit, id: 'node'
+    end
+
+    it 'responds with http success' do
+      do_get
+
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'renders the edit template' do
+      do_get
+
+      expect(response).to render_template('nodes/edit')
+    end
+
+    it 'requests the node from the model' do
+      do_get
+
+      expect(node_class).to have_received(:find).with('node')
+    end
+
+    it 'assigns @node to the view' do
+      do_get
+
+      expect(assigns(:node)).to eq(node)
+    end
+  end
 end

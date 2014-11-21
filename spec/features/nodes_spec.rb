@@ -97,5 +97,15 @@ RSpec.feature 'Managing tree nodes' do
 
       expect(page).to have_content('Root node')
     end
+
+    context 'editing an existing node' do
+      scenario 'I can find the edit button on a root node' do
+        visit "/nodes/#{root_node.id}"
+
+        click_on 'Edit node'
+
+        expect(current_path).to eq("/nodes/#{root_node.id}/edit")
+      end
+    end
   end
 end

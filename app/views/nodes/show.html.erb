@@ -1,4 +1,7 @@
 <% content_for :title, @node.name %>
+<% content_for :toolbar do %>
+  <%= link_to 'Edit node', [:edit, @node], class: 'btn btn-default' %>
+<% end %>
 
 <ul>
   <%= render @node.children %>
